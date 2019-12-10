@@ -1,18 +1,26 @@
 {
   "name": "@westegg/gatsby-theme-serif",
+  "author": "Westegg Authors (https://github.com/westegg/gatsby-theme-recipes/graphs/contributors)",
+  "repository": {
+    "type": "git",
+    "url": "westegg/gatsby-theme-serif"
+  },
   "version": "0.0.3",
-  "license": "MIT",
+  "main": "index.js",
+  "license": "SEE LICENSE IN https://github.com/westegg/gatsby-theme-recipes",
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "npm run develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
+    "build": "npm run lint && echo 'no build'",
     "lint": "prettier --write --config package.json \".{/notes/**/,/pages/**/,/posts/**/,/projects/**/,/src/**/,/}*.{md,mdx,css,sass,less,json,js,jsx,ts,tsx}\""
   },
+  "peerDependencies": {
+    "gatsby": "^2.15.28",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
+  },
   "dependencies": {
-    "gatsby": "^2.0.33",
+    "gatsby": "2.18.7",
     "gatsby-plugin-google-analytics": "^2.0.14",
-    "gatsby-plugin-react-helmet": "^3.0.4",
+    "gatsby-plugin-react-helmet": "^3.1.10",
     "gatsby-plugin-sass": "^2.0.7",
     "gatsby-source-filesystem": "^2.0.12",
     "gatsby-transformer-json": "^2.1.6",
@@ -23,7 +31,15 @@
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
-    "@misk/prettier": "0.1.23"
+    "@misk/prettier": "0.1.23",
+    "gatsby": "2.18.7",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
   },
-  "prettier": "@misk/prettier"
+  "prettier": "@misk/prettier",
+  "keywords": [
+    "gatsby",
+    "gatsby-theme",
+    "gatsby-plugin"
+  ]
 }
