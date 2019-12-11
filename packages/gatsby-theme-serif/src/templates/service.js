@@ -1,40 +1,44 @@
-import React from 'react';
-import { graphql } from 'gatsby';
-import SEO from '../components/SEO';
-import Layout from '../layouts/index';
+/** @jsx jsx */
+import { jsx, Styled } from "theme-ui"
+import { graphql } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
-const Service = ({ data }) => {
-  const { title } = data.markdownRemark.frontmatter;
-  const { html } = data.markdownRemark;
-  return (
-    <Layout bodyClass="page-service">
-      <SEO title={title} />
-      <div className="strip strip-white strip-diagonal">
-        <div className="container pt-4 pt-md-10">
-          <div className="row justify-content-start">
-            <div className="col-12 col-md-8">
-              <div className="service service-single">
-                <h1 className="title">{title}</h1>
-                <div className="content" dangerouslySetInnerHTML={{ __html: html }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Layout>
-  );
-};
+import SEO from "../components/SEO"
+import MarkdownLayout from "../components/MarkdownLayout"
+import PageTransition from "../components/PageTransition"
 
 export const query = graphql`
-  query($id: String!) {
-    markdownRemark(id: { eq: $id }) {
+  query($slug: String!) {
+    mdx(frontmatter: { slug: { eq: $slug } }) {
       frontmatter {
         title
-        path
+        date(formatString: "MMMM DD, YYYY")
       }
-      html
+      body
     }
   }
-`;
+`
 
-export default Service;
+const RecipeTemplate = ({
+  data: {
+    mdx: {
+      body,
+      frontmatter: { title, date }
+    }
+  }
+}) => {
+  return (
+    <article>
+      <SEO title={title} />
+      <MarkdownLayout>
+        <PageTransition>
+          <Styled.h1>{title}</Styled.h1>
+          <time sx={{ variant: "text.small" }}>{date}</time>
+          <MDXRenderer>{body}</MDXRenderer>
+        </PageTransition>
+      </MarkdownLayout>
+    </article>
+  )
+}
+
+export default RecipeTemplate

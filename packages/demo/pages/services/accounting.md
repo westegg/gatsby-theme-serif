@@ -1,8 +1,9 @@
 ---
-path: '/services/accounting'
-title: 'Accounting'
+templateKey: service
+slug: "services/accounting"
+title: "Accounting"
 date: 2018-11-18T12:33:46+10:00
-image: 'services/noun_591323.png'
+image: "services/noun_591323.png"
 ---
 
 Lorem markdownum aequalis strigis. _Saetigeri iubeas_, vultu huic alvum nondum

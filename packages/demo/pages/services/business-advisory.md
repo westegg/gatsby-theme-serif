@@ -1,8 +1,9 @@
 ---
-path: '/services/business-advisory'
-title: 'Business Advisory'
+templateKey: service
+slug: "services/business-advisory"
+title: "Business Advisory"
 date: 2018-11-28T15:14:39+10:00
-image: '/services/default.png'
+image: "/services/default.png"
 featured: true
 ---
 

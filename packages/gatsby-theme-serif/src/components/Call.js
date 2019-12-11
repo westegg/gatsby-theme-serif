@@ -1,48 +1,33 @@
-import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+import React from "react"
+import { Styled } from "theme-ui"
+import StyledLink from "./StyledLink"
+import useSiteMetadata from "../hooks/use-sitemetadata"
 
-const Call = props => (
-  <div className="call">
-    <div className="call-box-top">
-      <div className="call-phone">
-        <strong>Phone: </strong>
-        <a href={`tel:${props.data.site.siteMetadata.contact.phone}`}>
-        {props.data.site.siteMetadata.contact.phone}
-        </a>
+const Call = props => {
+  const { contact } = useSiteMetadata()
+  return (
+    <div>
+      <div>
+        <Styled.strong>Phone: </Styled.strong>
+        <StyledLink as={"a"} href={`tel:${contact.phone}`}>
+          {contact.phone}
+        </StyledLink>
       </div>
-      <div className="call-email">
-        <strong>Email: </strong>
-        <a href={`mailto:${props.data.site.siteMetadata.contact.email}`}>
-          {props.data.site.siteMetadata.contact.email}
-        </a>
+      <div>
+        <Styled.strong>Email: </Styled.strong>
+        <StyledLink as={"a"} href={`mailto:${contact.email}`}>
+          {contact.email}
+        </StyledLink>
       </div>
+      {props.button && (
+        <div className="call-box-bottom">
+          <a href="/contact" className="button">
+            Contact
+          </a>
+        </div>
+      )}
     </div>
-    {props.button && (
-      <div className="call-box-bottom">
-        <a href="/contact" className="button">
-          Contact
-        </a>
-      </div>
-    )}
-  </div>
-);
+  )
+}
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            contact {
-              email
-              phone
-            }
-          }
-        }
-      }
-    `}
-    render={data => <Call button={props.button} data={data} />}
-  />
-);
+export default Call

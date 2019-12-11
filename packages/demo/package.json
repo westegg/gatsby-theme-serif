@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "demo",
+  "name": "recipes-demo",
   "version": "1.0.0",
-  "license": "SEE LICENSE IN https://github.com/westegg/gatsby-theme-serif",
+  "license": "SEE LICENSE IN https://github.com/westegg/gatsby-theme-recipes",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
@@ -20,7 +20,9 @@
     "react-dom": "^16.10.1"
   },
   "devDependencies": {
-    "@misk/prettier": "0.1.23"
+    "@misk/prettier": "0.1.23",
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.4"
   },
   "prettier": "@misk/prettier"
 }

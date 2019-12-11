@@ -1,72 +1,104 @@
-const guid = process.env.NETLIFY_GOOGLE_ANALYTICS_ID
+const path = require("path")
 
-module.exports = {
-  siteMetadata: {
-    title: "Gatsby Serif",
-    description: "my theme",
-    contact: {
-      phone: "XXX XXX XXX",
-      email: "zerostaticthemes@gmail.com"
+module.exports = ({
+  basePath = "/",
+  contentPath = "posts",
+  iconPath,
+  title = "Delicious Recipes",
+  shortTitle = "Recipes"
+}) => {
+  return {
+    siteMetadata: {
+      title,
+      titleTemplate: "%s · ",
+      description: "",
+      url: "", // No trailing slash allowed!
+      image: "", // Path to your image you placed in the 'static' folder
+      author: "",
+      intro: "",
+      basePath,
+      menuLinks: [
+        {
+          name: "About",
+          slug: "/about/"
+        }
+      ],
+      footerLinks: [
+        {
+          name: "Terms",
+          href: "/terms"
+        }
+      ]
     },
-    menuLinks: [
+    plugins: [
       {
-        name: "Services",
-        link: "/services"
+        resolve: "gatsby-plugin-page-creator",
+        options: {
+          path: `${__dirname}/src/pages`
+        }
       },
       {
-        name: "Team",
-        link: "/team"
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: "pages",
+          path: `${__dirname}/src/pages/`
+        }
       },
       {
-        name: "Testimonials",
-        link: "/testimonials"
+        resolve: "gatsby-source-filesystem",
+        options: {
+          path: contentPath
+        }
       },
       {
-        name: "Contact",
-        link: "/contact"
-      }
+        resolve: "gatsby-source-filesystem",
+        options: {
+          path: "pages"
+        }
+      },
+      "gatsby-transformer-sharp",
+      "gatsby-plugin-sharp",
+      {
+        resolve: "gatsby-plugin-mdx",
+        options: {
+          defaultLayouts: {
+            default: require.resolve("./src/components/MarkdownPagesLayout.js"),
+            pages: require.resolve("./src/components/MarkdownLayout.js")
+          },
+          extensions: [`.md`, `.mdx`],
+          gatsbyRemarkPlugins: [
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                maxWidth: 510,
+                maxHeight: 510,
+                linkImagesToOriginal: false,
+                withWebp: true,
+                quality: 75
+              }
+            }
+          ]
+        }
+      },
+      "gatsby-plugin-theme-ui",
+      {
+        resolve: `gatsby-plugin-manifest`,
+        options: {
+          name: title,
+          short_name: shortTitle,
+          start_url: basePath,
+          background_color: "#FFF",
+          theme_color: "#FFF",
+          display: "standalone",
+          icon: iconPath
+            ? path.resolve(iconPath)
+            : require.resolve("./src/images/favicon.png"),
+
+          crossOrigin: `use-credentials`
+        }
+      },
+      "gatsby-plugin-react-helmet",
+      "gatsby-plugin-emotion"
     ]
-  },
-  plugins: [
-    "gatsby-plugin-sass",
-    "gatsby-transformer-json",
-    "gatsby-transformer-remark",
-    "gatsby-plugin-react-helmet",
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/pages`,
-        name: "pages"
-      }
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `pages`,
-        name: "pages"
-      }
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `data`,
-        name: "data"
-      }
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/images`,
-        name: "images"
-      }
-    },
-    {
-      resolve: "gatsby-plugin-google-analytics",
-      options: {
-        trackingId: guid ? guid : "UA-XXX-1",
-        // Puts tracking script in the head instead of the body
-        head: false
-      }
-    }
-  ]
+  }
 }
